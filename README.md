@@ -1,5 +1,7 @@
 # Agent Orchestrator
 
+[中文](README.zh.md)
+
 Cross-agent orchestration skill for Claude Code and Codex. Dispatch tasks between agents and third-party models (GLM, Mimo, MiniMax).
 
 ## Features
@@ -22,7 +24,7 @@ The installer:
 - Installs the Claude Code skill to `~/.claude/skills/agent-orchestrator`
 - Installs the Codex skill to `~/.codex/skills/agent-orchestrator`
 - Makes `scripts/dispatch.sh` executable
-- Creates `~/.local/bin/agent-dispatch`
+- Creates `~/.local/bin/agent-dispatch` (symlink to dispatch.sh)
 - Optionally writes GLM/Mimo/MiniMax API keys to `~/.zshrc`
 
 Installer options:
@@ -34,7 +36,7 @@ Installer options:
 ./install.sh --dry-run       # Preview what would be installed, write nothing
 ```
 
-Manual dispatcher path:
+Manual dispatcher path (same script as `agent-dispatch`, for users who used `--no-bin` or prefer full paths):
 
 ```bash
 ~/.claude/skills/agent-orchestrator/scripts/dispatch.sh
@@ -48,6 +50,32 @@ Add to `~/.zshrc` (keys only, no model variables):
 export GLM_API_KEY="your-glm-key"
 export MIMO_API_KEY="your-mimo-key"
 export MINIMAX_API_KEY="your-minimax-key"
+```
+
+## CLI Trigger Examples
+
+The skill auto-triggers when you use these phrases in Claude Code or Codex conversations:
+
+```
+# Ask Codex to do something
+"use codex to create a parser module"
+"delegate this to codex"
+"let codex handle the implementation"
+
+# Ask Claude to do something (from Codex)
+"ask claude to review this file"
+"use claude for security analysis"
+"delegate to claude"
+
+# Use third-party models
+"use glm to translate this"
+"use mimo for analysis"
+"use minimax for this task"
+
+# Interactive aliases (shell)
+ccz     # Start GLM interactive session
+ccm     # Start Mimo interactive session
+ccmx    # Start MiniMax interactive session
 ```
 
 ## Usage
