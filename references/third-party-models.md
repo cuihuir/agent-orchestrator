@@ -39,9 +39,9 @@ export MINIMAX_API_KEY="your-minimax-key"
 
 ### Dispatch script (推荐)
 ```bash
-dispatch.sh claude-glm "translate this to Chinese"
-dispatch.sh claude-mimo "analyze this code"
-dispatch.sh claude-minimax "implement this feature"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-glm "translate this to Chinese"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-mimo "analyze this code"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-minimax "implement this feature"
 ```
 
 ### Shell 直接调用
@@ -73,7 +73,7 @@ claude -p --bare "your prompt"
 ccz   # GLM 交互式
 ccm   # Mimo 交互式
 # MiniMax 建议也加一个 alias:
-# alias ccmx='export ANTHROPIC_BASE_URL="https://api.minimaxi.com/anthropic";export ANTHROPIC_AUTH_TOKEN="$MINIMAX_API_KEY";export ANTHROPIC_DEFAULT_SONNET_MODEL="MiniMax-M2.7";export ANTHROPIC_DEFAULT_OPUS_MODEL="MiniMax-M2.7";export ANTHROPIC_DEFAULT_HAIKU_MODEL="MiniMax-M2.7";export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1";claude'
+# alias ccmx='ANTHROPIC_BASE_URL="https://api.minimaxi.com/anthropic" ANTHROPIC_AUTH_TOKEN="$MINIMAX_API_KEY" ANTHROPIC_DEFAULT_SONNET_MODEL="MiniMax-M2.7" ANTHROPIC_DEFAULT_OPUS_MODEL="MiniMax-M2.7" ANTHROPIC_DEFAULT_HAIKU_MODEL="MiniMax-M2.7" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" claude'
 ```
 
 ## When to Use Third-Party Models

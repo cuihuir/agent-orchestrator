@@ -43,11 +43,11 @@ Break work into independent units. Each unit becomes one dispatch call.
 ### 2. Dispatch (parallel when possible)
 ```bash
 # Single task
-dispatch.sh codex "Create src/utils/parser.ts with parseConfig function"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "Create src/utils/parser.ts with parseConfig function"
 
 # Multiple independent tasks - run in parallel
-dispatch.sh codex "Create src/utils/parser.ts" --output /tmp/parser.txt &
-dispatch.sh codex "Create src/utils/validator.ts" --output /tmp/validator.txt &
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "Create src/utils/parser.ts" --output /tmp/parser.txt &
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "Create src/utils/validator.ts" --output /tmp/validator.txt &
 wait
 ```
 
@@ -83,13 +83,13 @@ See [references/third-party-models.md](references/third-party-models.md) for GLM
 
 ```bash
 # Quick dispatch to GLM
-dispatch.sh claude-glm "translate this to Chinese"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-glm "translate this to Chinese"
 
 # Quick dispatch to Mimo
-dispatch.sh claude-mimo "analyze this code"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-mimo "analyze this code"
 
 # Quick dispatch to MiniMax
-dispatch.sh claude-minimax "implement this feature"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-minimax "implement this feature"
 ```
 
 ## Review Protocol

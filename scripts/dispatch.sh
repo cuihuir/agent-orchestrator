@@ -13,8 +13,22 @@
 
 set -euo pipefail
 
-TARGET="${1:?Usage: dispatch.sh <codex|claude|claude-glm|claude-mimo|claude-minimax> <prompt>}"
-PROMPT="${2:?Missing prompt}"
+usage() {
+  echo "Usage: dispatch.sh <codex|claude|claude-glm|claude-mimo|claude-minimax> <prompt> [options]" >&2
+}
+
+if [[ $# -lt 2 ]]; then
+  usage
+  exit 1
+fi
+
+TARGET="$1"
+PROMPT="$2"
+if [[ "$PROMPT" == --* ]]; then
+  echo "Missing prompt before options" >&2
+  usage
+  exit 1
+fi
 shift 2
 
 CWD="$(pwd)"
@@ -46,6 +60,11 @@ while [[ $# -gt 0 ]]; do
     *) echo "Unknown option: $1" >&2; exit 1 ;;
   esac
 done
+
+if [[ ! "$TIMEOUT" =~ ^[1-9][0-9]*$ ]]; then
+  echo "Invalid --timeout: $TIMEOUT (must be a positive integer)" >&2
+  exit 1
+fi
 
 # Build stdin content if prompt is "-"
 STDIN_CONTENT=""

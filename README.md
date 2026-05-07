@@ -13,17 +13,27 @@ Cross-agent orchestration skill for Claude Code and Codex. Dispatch tasks betwee
 
 ```bash
 # Claude Code
-claude skills install agent-orchestrator.skill
-
-# Or manually
+git clone https://github.com/cuihuir/agent-orchestrator.git
 cp -r agent-orchestrator ~/.claude/skills/
 ```
 
-For Codex, also copy the SKILL.md:
+For Codex, also copy the Codex-specific SKILL.md:
 
 ```bash
 mkdir -p ~/.codex/skills/agent-orchestrator
-cp SKILL.md ~/.codex/skills/agent-orchestrator/
+cp agent-orchestrator/codex/SKILL.md ~/.codex/skills/agent-orchestrator/SKILL.md
+```
+
+The bundled dispatcher lives at:
+
+```bash
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh
+```
+
+Optional shell shortcut:
+
+```bash
+ln -sf ~/.claude/skills/agent-orchestrator/scripts/dispatch.sh ~/.local/bin/agent-dispatch
 ```
 
 ## API Key Setup
@@ -40,23 +50,23 @@ export MINIMAX_API_KEY="your-minimax-key"
 
 ```bash
 # Dispatch to Codex
-dispatch.sh codex "Create src/utils/parser.ts"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "Create src/utils/parser.ts"
 
 # Dispatch to Claude
-dispatch.sh claude "Review src/auth.ts for security issues"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude "Review src/auth.ts for security issues"
 
 # Dispatch to third-party models
-dispatch.sh claude-glm "translate this to Chinese"
-dispatch.sh claude-mimo "analyze this code"
-dispatch.sh claude-minimax "implement this feature"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-glm "translate this to Chinese"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-mimo "analyze this code"
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-minimax "implement this feature"
 
 # Parallel dispatch
-dispatch.sh codex "task A" --output /tmp/a.txt &
-dispatch.sh codex "task B" --output /tmp/b.txt &
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "task A" --output /tmp/a.txt &
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "task B" --output /tmp/b.txt &
 wait
 
 # Dry run (preview command without executing)
-dispatch.sh claude "test prompt" --dry-run
+~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude "test prompt" --dry-run
 ```
 
 ## Interactive Aliases
@@ -64,9 +74,9 @@ dispatch.sh claude "test prompt" --dry-run
 Add to `~/.zshrc`:
 
 ```bash
-alias ccz='export ANTHROPIC_BASE_URL="https://open.bigmodel.cn/api/anthropic";export ANTHROPIC_AUTH_TOKEN="$GLM_API_KEY";export ANTHROPIC_DEFAULT_OPUS_MODEL="glm-5.1";export ANTHROPIC_DEFAULT_SONNET_MODEL="glm-5.1";export ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-5.1";claude'
-alias ccm='export ANTHROPIC_BASE_URL="https://token-plan-cn.xiaomimimo.com/anthropic";export ANTHROPIC_AUTH_TOKEN="$MIMO_API_KEY";export ANTHROPIC_DEFAULT_OPUS_MODEL="mimo-v2.5-pro";export ANTHROPIC_DEFAULT_SONNET_MODEL="mimo-v2.5-pro";export ANTHROPIC_DEFAULT_HAIKU_MODEL="mimo-v2.5-pro";claude'
-alias ccmx='export ANTHROPIC_BASE_URL="https://api.minimaxi.com/anthropic";export ANTHROPIC_AUTH_TOKEN="$MINIMAX_API_KEY";export ANTHROPIC_DEFAULT_OPUS_MODEL="MiniMax-M2.7";export ANTHROPIC_DEFAULT_SONNET_MODEL="MiniMax-M2.7";export ANTHROPIC_DEFAULT_HAIKU_MODEL="MiniMax-M2.7";export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1";claude'
+alias ccz='ANTHROPIC_BASE_URL="https://open.bigmodel.cn/api/anthropic" ANTHROPIC_AUTH_TOKEN="$GLM_API_KEY" ANTHROPIC_DEFAULT_OPUS_MODEL="glm-5.1" ANTHROPIC_DEFAULT_SONNET_MODEL="glm-5.1" ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-5.1" claude'
+alias ccm='ANTHROPIC_BASE_URL="https://token-plan-cn.xiaomimimo.com/anthropic" ANTHROPIC_AUTH_TOKEN="$MIMO_API_KEY" ANTHROPIC_DEFAULT_OPUS_MODEL="mimo-v2.5-pro" ANTHROPIC_DEFAULT_SONNET_MODEL="mimo-v2.5-pro" ANTHROPIC_DEFAULT_HAIKU_MODEL="mimo-v2.5-pro" claude'
+alias ccmx='ANTHROPIC_BASE_URL="https://api.minimaxi.com/anthropic" ANTHROPIC_AUTH_TOKEN="$MINIMAX_API_KEY" ANTHROPIC_DEFAULT_OPUS_MODEL="MiniMax-M2.7" ANTHROPIC_DEFAULT_SONNET_MODEL="MiniMax-M2.7" ANTHROPIC_DEFAULT_HAIKU_MODEL="MiniMax-M2.7" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" claude'
 ```
 
 ## Orchestration Patterns
