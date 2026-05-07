@@ -12,28 +12,32 @@ Cross-agent orchestration skill for Claude Code and Codex. Dispatch tasks betwee
 ## Install
 
 ```bash
-# Claude Code
 git clone https://github.com/cuihuir/agent-orchestrator.git
-cp -r agent-orchestrator ~/.claude/skills/
+cd agent-orchestrator
+./install.sh
 ```
 
-For Codex, also copy the Codex-specific SKILL.md:
+The installer:
+
+- Installs the Claude Code skill to `~/.claude/skills/agent-orchestrator`
+- Installs the Codex skill to `~/.codex/skills/agent-orchestrator`
+- Makes `scripts/dispatch.sh` executable
+- Creates `~/.local/bin/agent-dispatch`
+- Optionally writes GLM/Mimo/MiniMax API keys to `~/.zshrc`
+
+Installer options:
 
 ```bash
-mkdir -p ~/.codex/skills/agent-orchestrator
-cp agent-orchestrator/codex/SKILL.md ~/.codex/skills/agent-orchestrator/SKILL.md
+./install.sh --no-api-keys
+./install.sh --api-keys
+./install.sh --no-bin
+./install.sh --dry-run
 ```
 
-The bundled dispatcher lives at:
+Manual dispatcher path:
 
 ```bash
 ~/.claude/skills/agent-orchestrator/scripts/dispatch.sh
-```
-
-Optional shell shortcut:
-
-```bash
-ln -sf ~/.claude/skills/agent-orchestrator/scripts/dispatch.sh ~/.local/bin/agent-dispatch
 ```
 
 ## API Key Setup
@@ -50,23 +54,23 @@ export MINIMAX_API_KEY="your-minimax-key"
 
 ```bash
 # Dispatch to Codex
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "Create src/utils/parser.ts"
+agent-dispatch codex "Create src/utils/parser.ts"
 
 # Dispatch to Claude
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude "Review src/auth.ts for security issues"
+agent-dispatch claude "Review src/auth.ts for security issues"
 
 # Dispatch to third-party models
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-glm "translate this to Chinese"
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-mimo "analyze this code"
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude-minimax "implement this feature"
+agent-dispatch claude-glm "translate this to Chinese"
+agent-dispatch claude-mimo "analyze this code"
+agent-dispatch claude-minimax "implement this feature"
 
 # Parallel dispatch
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "task A" --output /tmp/a.txt &
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh codex "task B" --output /tmp/b.txt &
+agent-dispatch codex "task A" --output /tmp/a.txt &
+agent-dispatch codex "task B" --output /tmp/b.txt &
 wait
 
 # Dry run (preview command without executing)
-~/.claude/skills/agent-orchestrator/scripts/dispatch.sh claude "test prompt" --dry-run
+agent-dispatch claude "test prompt" --dry-run
 ```
 
 ## Interactive Aliases
