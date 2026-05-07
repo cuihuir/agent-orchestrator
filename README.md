@@ -28,10 +28,10 @@ The installer:
 Installer options:
 
 ```bash
-./install.sh --no-api-keys
-./install.sh --api-keys
-./install.sh --no-bin
-./install.sh --dry-run
+./install.sh --no-api-keys  # Skip API key prompt, don't write keys to ~/.zshrc
+./install.sh --api-keys      # Prompt for GLM/Mimo/MiniMax keys immediately (non-interactive: error)
+./install.sh --no-bin        # Don't create ~/.local/bin/agent-dispatch shortcut
+./install.sh --dry-run       # Preview what would be installed, write nothing
 ```
 
 Manual dispatcher path:
